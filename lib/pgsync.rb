@@ -149,8 +149,10 @@ module PgSync
               extra_fields = to_fields - from_fields
               missing_fields = from_fields - to_fields
 
-              from_sequences = sequences(from_connection, table, shared_fields)
-              to_sequences = sequences(to_connection, table, shared_fields)
+              from_table_with_schema = "#{from_schema}.#{table}"
+              from_sequences = sequences(from_connection, from_table_with_schema, shared_fields)
+              to_table_with_schema = "#{to_schema}.#{table}"
+              to_sequences = sequences(to_connection, to_table_with_schema, shared_fields)
               shared_sequences = to_sequences & from_sequences
               extra_sequences = to_sequences - from_sequences
               missing_sequences = from_sequences - to_sequences
